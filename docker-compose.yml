@@ -1,0 +1,24 @@
+version: '3.0'
+
+services:
+  spring-postgres:
+    image: jobpostgres
+    container_name: spring-postgres
+    build: .
+    ports:
+      - "9002:1043"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/mydb  # PostgreSQL URL
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect  # Set the Hibernate dialect
+    networks:
+      - postgres  # Ensure this is the same network as PostgreSQL
+    restart: unless-stopped
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
